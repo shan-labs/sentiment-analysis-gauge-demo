@@ -16,6 +16,26 @@ export default class SentimentOutput extends Component {
     };
   }
 
+  setEmotions = () => {
+    const sentimentAnalysis =
+      this.state.sentenceId === -1
+        ? this.props.sentiment["document_tone"]
+        : this.props.sentiment["sentences_tone"][this.state.sentenceId];
+
+    let newEmotions = {};
+
+    sentimentAnalysis.tones.forEach(
+      analysis =>
+        (newEmotions = { ...newEmotions, [analysis.tone_id]: analysis.score })
+    );
+
+    this.setState(prevState => {
+      return { emotions: { ...initialEmotions, ...newEmotions } };
+    });
+  };
+
+  componentDidMount = () => this.setEmotions();
+
   render() {
     return (
       <>
