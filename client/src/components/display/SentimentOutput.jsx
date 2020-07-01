@@ -1,9 +1,19 @@
 import React, { Component } from "react";
 import ReactSpeedometer from "react-d3-speedometer";
 
+const initialEmotions = {
+  sadness: 0,
+  analytical: 0,
+  anger: 0
+};
+
 export default class SentimentOutput extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      sentenceId: -1,
+      emotions: { ...initialEmotions }
+    };
   }
 
   render() {
@@ -47,7 +57,7 @@ export default class SentimentOutput extends Component {
           needleTransition="easeElastic"
           needleColor={"#90f2ff"}
           textColor={"#d8dee9"}
-        />{" "}
+        />
       </>
     );
   }
