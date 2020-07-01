@@ -39,7 +39,15 @@ export default class SentimentOutput extends Component {
   render() {
     return (
       <>
-        <Gauge value={100} />
+        {Object.keys(initialEmotions).map(emotion => {
+          return (
+            <Gauge
+              value={this.state.emotions[emotion]}
+              title={`sentiment analysis ${emotion}`}
+              key={emotion}
+            />
+          );
+        })}
       </>
     );
   }
