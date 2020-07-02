@@ -16,6 +16,10 @@ export default class SentimentOutput extends Component {
     };
   }
 
+  componentDidMount = () => {
+    if (this.props.sentiment) this.setEmotions();
+  };
+
   setEmotions = () => {
     const sentimentAnalysis =
       this.state.sentenceId === -1
@@ -34,21 +38,27 @@ export default class SentimentOutput extends Component {
     });
   };
 
-  componentDidMount = () => this.setEmotions();
+  sentimentRender = () => (
+    <>
+      {Object.keys(initialEmotions).map(emotion => {
+        return (
+          <Gauge
+            value={this.state.emotions[emotion]}
+            title={`sentiment analysis ${emotion}`}
+            key={emotion}
+          />
+        );
+      })}
+    </>
+  );
+
+  waitRender = () => <div>[Waiting for Input]</div>;
 
   render() {
-    return (
-      <>
-        {Object.keys(initialEmotions).map(emotion => {
-          return (
-            <Gauge
-              value={this.state.emotions[emotion]}
-              title={`sentiment analysis ${emotion}`}
-              key={emotion}
-            />
-          );
-        })}
-      </>
-    );
+    if (this.props.sentiment) {
+      return this.sentimentRender();
+    } else {
+      return this.waitRender();
+    }
   }
 }
