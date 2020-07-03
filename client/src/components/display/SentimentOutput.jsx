@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Gauge from "./Gauge";
+import DisplaySentences from "./DisplaySentences";
 
 const initialEmotions = {
   sadness: 0,
@@ -32,8 +33,8 @@ export default class SentimentOutput extends Component {
   setEmotions = () => {
     const sentimentAnalysis =
       this.state.sentenceId === -1
-        ? this.props.sentiment["document_tone"]
-        : this.props.sentiment["sentences_tone"][this.state.sentenceId];
+        ? this.props.sentiment.document_tone
+        : this.props.sentiment.sentences_tone[this.state.sentenceId];
 
     let newEmotions = {};
 
@@ -47,6 +48,8 @@ export default class SentimentOutput extends Component {
     });
   };
 
+  setSentenceId = newSentenceId => this.setState({ sentenceId: newSentenceId });
+
   sentimentRender = () => (
     <>
       {Object.keys(initialEmotions).map(emotion => {
@@ -58,6 +61,11 @@ export default class SentimentOutput extends Component {
           />
         );
       })}
+
+      <DisplaySentences
+        setSentenceId={this.setSentenceId}
+        sentences={this.props.sentiment.sentences_tone}
+      />
     </>
   );
 
