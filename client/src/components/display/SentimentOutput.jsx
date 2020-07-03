@@ -20,6 +20,15 @@ export default class SentimentOutput extends Component {
     if (this.props.sentiment) this.setEmotions();
   };
 
+  componentDidUpdate = (prevProps, prevState) => {
+    if (
+      this.props.sentiment !== prevProps.sentiment ||
+      this.state.sentenceId !== prevState.sentenceId
+    ) {
+      this.setEmotions();
+    }
+  };
+
   setEmotions = () => {
     const sentimentAnalysis =
       this.state.sentenceId === -1
